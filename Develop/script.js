@@ -2,21 +2,31 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
-$(function () {
-  // call the save buttons
-  var saveButtons = document.getElementsByClassName('saveBtn');
-  // create a for loop regarding all the save buttons
-  for (var i = 0; i < saveButtons.length; i++){
-    // upon clicking, run this function
-    saveButtons[i].addEventListener('click', function() {
-      var closestTimeBlock = this.parentNode;
+  $(function () {
+    // call the save buttons
+    var saveButtons = document.getElementsByClassName('saveBtn');
+    // create a for loop regarding all the save buttons
+    for (var i = 0; i < saveButtons.length; i++) {
+      // upon clicking, run this function
+      saveButtons[i].addEventListener('click', function () {
+        var closestTimeBlock = this.parentNode;
+        var timeBlockId = closestTimeBlock.id;
+        var descriptionInput = closestTimeBlock.querySelector('textarea');
+        var description = descriptionInput.value;
+        localStorage.setItem(timeBlockId, description);
+      });
+  
+      // Retrieve value from localStorage and display it in the child textbox
+      var closestTimeBlock = saveButtons[i].parentNode;
       var timeBlockId = closestTimeBlock.id;
       var descriptionInput = closestTimeBlock.querySelector('textarea');
-      var description = descriptionInput.value;
-      localStorage.setItem(timeBlockId, description);
-    })};
-
-
+      var savedDescription = localStorage.getItem(timeBlockId);
+      if (savedDescription) {
+        descriptionInput.value = savedDescription;
+      }
+    }
+  });
+  
 
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
@@ -55,7 +65,7 @@ $(function () {
   var today = dayjs();
   $('#currentDay').text(today.format('MMM D, YYYY'));
 
-});
+;
 
 
 
