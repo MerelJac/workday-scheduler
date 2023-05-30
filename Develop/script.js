@@ -24,16 +24,50 @@
       if (savedDescription) {
         descriptionInput.value = savedDescription;
       }
+    }    
+    // 
+    var colorBox = document.querySelectorAll(".time-block");
+    var currentTime = dayjs().format('HH');
+
+    var currentTimeValue = "hour-" + currentTime
+
+    console.log(currentTimeValue);
+
+    for (var t = 0; t < colorBox.length; t++) {
+      // track the local time
+      console.log(currentTime);
+      // pasre ID to just a number
+      var boxID = colorBox[t].id;
+      var boxIDparsed = parseInt(boxID.split('-')[1]);
+      console.log(boxIDparsed);
+      // if textarea has the same id as the hour, make the class green 
+      if (boxIDparsed < currentTime) {
+        console.log(colorBox[t], "past");
+        colorBox[t].classList.add("past");
+        colorBox[t].classList.remove("present");
+        colorBox[t].classList.remove("future");
+      } else if (boxIDparsed == currentTime) {
+        console.log(colorBox[t], "present");
+        colorBox[t].classList.add("present");
+        colorBox[t].classList.remove("past");
+        colorBox[t].classList.remove("future");
+      } else if (boxIDparsed > currentTime) {
+        console.log(colorBox[t], "future");
+        colorBox[t].classList.add("future");
+        colorBox[t].classList.remove("present");
+        colorBox[t].classList.remove("past");
+      };
+
+
+
     }
+
+
+    
+
   });
   
 
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
 
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -63,7 +97,7 @@
 
   // TODO: Add code to display the current date in the header of the page.
   var today = dayjs();
-  $('#currentDay').text(today.format('MMM D, YYYY'));
+  $('#currentDay').text(today.format('MMM D, YYYY HH:mma'));
 
 ;
 
